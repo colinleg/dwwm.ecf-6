@@ -1,0 +1,155 @@
+------ methods && props de la class Blog dans Controller/Blog.php ------
+
+
+		si pas de get[a], get[a] = 'index' 
+		
+	*** Propriétés
+
+	
+	const MAXPOST = 2
+	protected oUtils oModel 
+	- iId
+	
+	
+	**** consruct
+		active la session 
+		oUtil va chercer Util 
+		oUtil va chercher modele 'Blog'
+		oModel new Blog 
+		verifie id par get sinon 0, 
+	
+	
+	*** methods avec vue 
+	
+	
+		index() : get() du model Blog 
+			getView('index)
+			
+		notFound(): set un header notfound 
+			getView('notfound')
+			
+		post(): si get[id] vide, redirige blog_index
+			getById(get[id]) de model Blog
+			getComments() de model Blog
+			getUserId(verifie session) model Blog
+			si ya post[submit_comment]
+				arr aData, puis post comment via addComment() de model Blog 
+				change url blogpost_$_get[id] par javascript
+				
+			met dans utils userVotes - le res de userVotes(session) de model Blog 
+			getView('post') de oUtils : on obtient les posts
+			
+		chapters() : getAll() ds model Blog est attribué a oPosts ds utils 
+				utils -> getView('chapter's) 
+		
+		login() : si user logged, redirige CONST ROOT URL . 'blog_index.html'
+			si post submit 
+				attribut variable aux post email pass, on verifie isAdmin() de model Blog 
+				si pas de mail ou pass -> err
+			regle une variable de session [isAdmin] ou [isUser] -> l'user ou admin est connecté 
+			getView(login)
+			
+		registration() : si user logged 
+			redirect blog_index
+			si ya post[submit]
+				on recupere ds variable htmlspecialchar des post 
+				
+				** gestion erreur 
+				si pas de pass, ou pass et pass_again different, ou verifie email bdd (emailTaken() de modelBlog),
+				ou verifie pseudo ( pseudoTaken() de modelBlog) ===> erreur 
+				**
+				
+				si pas d'erreur aData = tableau fleche, encryptage sha1 du pass 
+				addUser() de modelBlog 
+				replace en Js blog_login.html
+				sSuccMsg ds utils 
+				getView(registration)
+				
+				
+		legalNotice() : getView(legalNotice)
+	
+	
+	
+	*** methods sans vue 
+		
+		protected isLogged() : retourne var session is_admin
+		
+		protected userIsLogged(): reourne var session is_user 
+		
+		logout() : si session, détruit 
+			redirection root_url
+			
+		signal() : si un user est co 
+			blog_index.html
+			si methode de requete differente de post -> 403 
+			si get[vote] == 1 
+					aData reccupere get[commentId], param Session , get [postid]
+				si (signalExist() de modelBlog renvoie + que 0 
+					deleteUserVote() oModel
+					substrSignal(commentid par get ) oModel
+				sinon
+					signalComment(aData)
+					addSignal(get[commentid]) 
+					setUnseen (get[commentId) tout de oModel Blog
+			sinon getView(notfound)
+			root_url 
+			
+		
+		
+
+------ methods de la class Admin dans Controller/Admin.php ------
+
+	-> Admin extends Blog 
+	
+	**** avec vue
+		
+		+ edit() : si user est logged, redirige vers blog_index.html,
+			puis getAll() dans oModel 
+		
+		+ editPost() : si user est logged, si ya une requete post edit_submit et que ds ce post il ya title et body,
+			getModel(Admin) 
+			crée un objet oModel admin 
+			cree un arr aData qui contient les vars recues par post 
+			update le modele avec l'arr 
+			verification de l'extension pr les images 
+			
+		+ add(): si user logged , et qu'il y a un post, avec title et body, 
+			getModel(Admin) 
+			crée arr aData 
+			oModel->add(arr) insere les post dans db 
+			verifie extension 
+			 -> article bien ajouté
+			 
+		+ dashboard() : si user logged, redirige vers blog_index.html
+			getModel(Admin)
+			oModel = new admin
+			table = table traduction, tableau fléché
+			colors = attribue des couleurs à post comments user votes
+			
+			utils 
+			
+			pour chaque tableau rempli avec les getters de oModel 
+		
+	
+	**** sans vue 
+		
+		+ delete() : si user logged, redirige...
+			deleteComments() de Admin, 
+			deleteVotes
+			delete 
+				=> supprime les comments, les votes et le post via les methodes de Admin (model)
+				
+		
+		+ seeCommentJs() : see_comment() de Admin 
+		
+		+ deleteCommentJs() : delete_comment() de Admin, deleteVotes(id transmi par get)
+		
+		+ deleteComment() : si user logged creation omodel admin
+					recupere un get[id]
+					deleteComment(id transmi par get) de Admin
+					delete(id transmi par get) de Admin
+					
+		- getColor() : obtient la couleur associé a chaque table  
+		
+		
+

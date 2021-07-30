@@ -1,0 +1,14 @@
+ErrorDocument 403 /view/error.php
+ErrorDocument 404 /view/error.php
+ErrorDocument 405 /view/error.php
+ErrorDocument 408 /view/error.php
+ErrorDocument 500 /view/error.php
+ErrorDocument 502 /view/error.php
+ErrorDocument 504 /view/error.php
+
+RewriteEngine On
+RewriteRule ^([^_]*)_([^_]*)\.html$ /?p=$1&a=$2 [L]
+RewriteRule ^([^_]*)_([^_]*)_([^_]*)\.html$ /?p=$1&a=$2&id=$3 [L]
+RewriteRule ^([^_]*)_([^_]*)_([^_]*)_([^_]*)_([^_]*)\.html$ /?p=$1&a=$2&postid=$3&commentId=$4&vote=$5 [L]
+
+

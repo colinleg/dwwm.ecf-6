@@ -1,0 +1,29 @@
+class Loader 
+
+	+ init() : intialise le loader
+	
+	- loadClasses(class) : class = remplace l'espace et le \ 
+	
+class Router 
+
+	+ run(arr) : met en variable des expressions comme blog, controller root_pathController ... 
+		si il y a un fichier type Controller.php 
+			rajoute un espace pr nomControler et stocke var oCtrl 
+			
+		// La classe ReflectionClass rapporte des informations sur une classe.
+            	// La classe ReflectionMethod rapporte des informations sur une méthode.
+            	// call_user_func : Appelle une fonction de rappel callback fournie par le paramètre callback où les autres arguments seront 			passés en paramètre.
+            	
+            	si pas de controller -> notFound 
+            	
+class Util 
+
+	+ getView(name) : _get() avec param view
+	
+	+ get Model(name) : _get() avec param model 
+	
+	- _get(nomfichier , type ) : var fullpath = root_path / nomfichier . php
+					si il y a un fichier correspondant -> require fullpath 
+					sinon le chemin n'existe pas 
+					
+	+ __set(clé,valeur) : $this->$sKey = $mVal;

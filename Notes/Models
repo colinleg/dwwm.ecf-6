@@ -1,0 +1,123 @@
+------ les methodes publiques de la classe Blog : ------
+
+	__construct()
+	
+	****GET***
+	
+	get(decalage, limit) : select plusieurs ligne ds table posts 
+	
+	getById(id) : select ds table posts 1 ligne where id 
+	
+	getComments(): select tous les commentaires liés par l'id du post
+	
+	getAll() : select tous les posts / trié date création
+	
+	isAdmin(mail) : requete pdo avec l'email 
+	
+	login(mail, pass) : demande db afficher ts les user avec email, pass puis count nb ligne, renvoie nbLigne
+	
+	signalExist(data) : renvoie le nb de comment d'un user particulier 
+	
+	userVotes(user) : affiche * table votes en fonction de l'id
+	
+	pseudoTaken(pseudo) : affiche table users en fonction du pseudo 
+	
+	emailTaken(emal) : afiche table Users en fonction de l'email
+	
+	getUserId(id) : affiche un id en fonction du pseudo 
+	
+	
+	****SET***
+	
+	
+	addComment(arr data) : insere ds table Comments le tableau donné
+	
+	addUser(arr) : insere dans table Users le tableau donné
+	
+	signalComment(arr) : affiche table Comments en fonction de l'id, si exist insere dans table Votes le tableau donné , sinon 
+				renvoie ""Impossible de voter pour un commentaire qui n'existe pas"
+				
+	*****UPDATE*****
+	
+	
+	substrSignal(id) : met a jour un vote dans table Comments en fonction de l'id
+	
+	addSignal(id) : ajoute 1 à la ligne signals dans table Comments en fonction de l'id 
+	
+	setUnseen(id) : met 0 dans ligne seen dans table Comments en fonction de l'id 
+	
+	
+	****DELETE*****
+	
+	
+	deleteUserVote(arr) : supprime dans table Vote en fonction de l'id user 
+	
+	
+	
+	
+	
+----- les methodes publiques de la classe Admin (extends Blog) : ------
+
+
+
+	****SELECT*****
+	
+	intable(table) : renvoie nb de ligne dans la table 
+	
+	getCommentsUnseen() : renvoie dans la table Comments, les ligne avec seen = 0 
+	
+	getSignaledComments() : renvoie dans la table Comments, les lignes avec au moins 1 seen 
+	
+	getNbrSignals() : renvoie le nombre de votes dans table Votes
+	
+	
+	
+	*****UPDATE****
+	  
+	 update(arr(titre,content,idpost)) : met un jour ds un post un titre, un body en fonction id précisé
+	 
+	 updateImg(nom, id, nomDossier) : met a jour ds table posts image en fonction id 
+	 
+	 
+	 postImg(nomDossier extention) : met a jour dans table Posts image en fonction id 
+	 
+	 see_comment() : 
+	 
+	
+	 ***** DELETE ****
+	 
+	 delete(id) : supprime un ligne dans table Posts
+	 
+	 deleteComments(id) : supprime un comment , avec post 
+	 
+	 deleteComment(id) : supprime un coment avec id 
+	 
+	 delete_comment() : supprime ds table comments, votes ou id - par post 
+	 
+	 deleteVote(id) : meme principe
+	 
+	 deleteVotes(id) : meme principe (~ ligne 175 admin.php)
+	 
+	 
+	 **** INSERT *****
+	 
+	 add(arr) : insere dans table Posts tableau donné
+	 
+	 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

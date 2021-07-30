@@ -82,7 +82,7 @@ class Admin extends Blog
             $this->oModel = new \BlogPhp\Model\Admin;
 
             $aData = array('title' => $_POST['title'], 'body' => $_POST['body'], 'created_date' => date('Y-m-d H:i:s'));
-            $this->oModel->add($aData);
+            $this->oModel->add($aData); // C'est là que ça marche plus 
 
             if (!empty($_FILES['image']['name']))
             {
@@ -100,7 +100,7 @@ class Admin extends Blog
       }
 
       $this->oUtil->getView('add_post');
-    }
+    } 
 
     // On affiche la page dashboard.php
     // On définit les tables qui seront affichées sur la page ainsi que leur couleur

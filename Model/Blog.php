@@ -75,7 +75,7 @@ class Blog
   {
     $a = [
       'email' 	  => $sEmail,
-      'password' 	=> md5($sPassword)
+      'password' 	=> sha1($sPassword)
     ];
     $sSql = "SELECT * FROM Users WHERE email = :email AND password = :password";
     $oStmt = $this->oDb->prepare($sSql);

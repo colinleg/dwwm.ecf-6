@@ -1,0 +1,25 @@
+Problème suspecté : 
+
+	*** function _loadClasses($sClass) ligne 22 dans Loader.php
+	
+		-> utilisation de DIRECTORY_SEPARATOR ? PATH_SEPARATOR ?  système Windows, Linux / et \ 
+		-> spl_autoload_register() ?
+		-> probleme ROOT_PATH ? 
+		-> à partir des bugs dans le Controller/Admin.php où toutes les methodes issues d'un modèle
+			sont détectées comme erreurs par Intelephense ( ex : $this->oModel->update($aData);) 
+			-> Plus exactement, toutes les méthodes de la classe Admin ( extends Blog ) sont détectées comme 
+			erreurs. Celles de la classe Blog fonctionnant apparemment. 
+		-> voir ligne 85 Controller/Admin.php 
+		-> la fonction add() probleme ? -> Quand je rentre manuellement dans phpmyadmin pas de probleme. 
+		Pb Controller / Model 
+
+	*** static/filemanager/dialog.php - 6 bugs : 
+
+		-> init: function() {...}  => expected : 
+
+
+
+	**** $this->oUtil->sSuccMsg à la ligne 171 de blog.php ( model ) ne fonctionne pas 
+
+
+	**** a la ligne 78 de Model/Blog.php -> remplacement de md5 par sha1 pour pouvoir se connecter sur un utilisateur non admin crée via le site 

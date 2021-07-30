@@ -137,7 +137,7 @@ class Blog
 		if (isset($_POST['submit']))
 		{
 			$sPassword = htmlspecialchars(trim($_POST['password']));
-      $sPassword_again = htmlspecialchars(trim($_POST['password_again']));
+      		$sPassword_again = htmlspecialchars(trim($_POST['password_again']));
 			$sEmail = htmlspecialchars(trim($_POST['email']));
 			$sPseudo = htmlspecialchars(trim($_POST['pseudo']));
 
@@ -165,8 +165,10 @@ class Blog
 			{
 				$aData = array('email' => $sEmail, 'pseudo' => $sPseudo, 'password' => sha1($sPassword));
 				$this->oModel->addUser($aData);
-				?> <script>window.location.replace('blog_login.html');</script> <?php
-				$this->oUtil->sSuccMsg = 'Votre compte a été créé, vous pouvez maintenant vous connecter';
+				?> 
+				<script>window.location.replace('blog_login.html');</script> 
+				<?php
+				$this->oUtil->sSuccMsg = 'Votre compte a été créé, vous pouvez maintenant vous connecter'; //ne fonctionne pas 
 			}
 
 		}

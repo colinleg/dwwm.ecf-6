@@ -4,7 +4,7 @@
 		<div class="container">
 			<div class="nav-wrapper">
 
-				<a href="<?=ROOT_URL?>blog_index.html" class="brand-logo">Jean Forteroche</a>
+				<a href="<?=ROOT_URL?>blog_index.html" class="brand-logo">Colin Legoedec</a>
 
 				<a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
 

@@ -14,9 +14,24 @@
                 <time datetime="<?=$this->oPost->createdDate?>" pubdate="pubdate"></time>
 
                 <h1><?=htmlspecialchars($this->oPost->title)?></h1>
+                
+
                 <p><?=nl2br($this->oPost->body)?></p>
             </article>
             <hr>
+            
+            <!-- Perso 1 : Ajout de catégories  -->
+                
+            <?php if($this->oPost->idCategorie != NULL ){
+
+                    foreach($this->oCats as $oCat){
+                        if($this->oPost->idCategorie == $oCat->id){
+                            echo '<h5 class="hoverViolet" style="cursor:pointer;"><a=>Voir plus d\'articles dans la catégorie ' . $oCat->nomCategorie . '</a> </h5>';
+                        }
+                    }
+                    
+                }?>
+
             <p><em>Posté le <?=date('d/m/Y à H:i', strtotime($this->oPost->createdDate));?></em></p>
             <br>
 

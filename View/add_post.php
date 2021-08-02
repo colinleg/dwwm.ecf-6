@@ -11,6 +11,13 @@
 			<label for="title">Titre de l'article</label>
 		</div>
 
+		<!-- Personnalisation 1 : Ajout d'une catégorie  -->
+		<div class="input-field col s12">
+			<input type="text" name="categorie" id="categorie">
+			<label for="categorie">Categorie de l'article</label>
+		</div>	
+		<!-- Fin Personnalisation  -->
+		
 		<div class="input-field col s12">
       <label for="editable">Contenu de l'article</label>
       <br><br>

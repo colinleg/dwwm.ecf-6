@@ -11,12 +11,28 @@
     <div class="row">
 
       <!-- ARTICLES -->
+                    
       <?php foreach ($this->oPosts as $oPost): ?>
         <div class="col l6 m6 s12">
           <div class="card hoverable">
             <div class="card-content">
               <h5><a class="grey-text text-darken-2" href="<?=ROOT_URL?>blog_post_<?=$oPost->id?>.html"><?=htmlspecialchars($oPost->title)?></a></h5>
               <h6 class="grey-text">Le <?=date('d/m/Y à H:i', strtotime($oPost->createdDate));?></h6>
+
+              <!-- Perso 1 : Ajout des catégories  -->
+              
+              <?php 
+                if($oPost->idCategorie != NULL){
+                  foreach($this->oCats as $oCat){
+                    if($oCat->id == $oPost->idCategorie){
+                      echo 'Categorie : ' . $oCat->nomCategorie;
+                    }
+                  }
+                }
+                  
+              ?>
+              
+
             </div>
             <div class="card-image waves-effect waves-block waves-light">
     					<img src="<?=ROOT_URL?>static/img/posts/<?= $oPost->image ?>" class="activator" alt="<?= $oPost->title ?>">

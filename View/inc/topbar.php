@@ -9,8 +9,14 @@
 				<a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
 
 				<ul class="right hide-on-med-and-down">
+					
 
 					<li class="<?php echo ($_GET['a']=="index")?"active" : ""; ?>"><a href="<?=ROOT_URL?>blog_index.html">Accueil</a></li>
+
+					<!-- Personnalisation 1 : Ajout de catégories  -->
+					<li class="<?php echo ($_GET['a']=="categorie")?"active" : ""; ?>"><a href="<?=ROOT_URL?>blog_categories.html">Categories</a></li>
+					<!-- Fin Personnalisation -->
+
 					<li class="<?php echo ($_GET['a']=="chapters")?"active" : ""; ?>"><a href="<?=ROOT_URL?>blog_chapters.html">Chapitres</a></li>
 
 					<?php if (empty($_SESSION['is_admin']) && empty($_SESSION['is_user'])): ?>

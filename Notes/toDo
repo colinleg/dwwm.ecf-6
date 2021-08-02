@@ -1,0 +1,4 @@
+revoir la création d'un post : un post doit pouvoir être créée sans catégorie
+sans renvoyer d'erreur -> et ainsi remettre not null sur nomCategorie de Categorie 
+
+pouvoir modifier un article, ajouter une catégorie

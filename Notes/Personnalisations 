@@ -1,0 +1,45 @@
+Personnalisation 1 : Ajout d'un système de catégorie 
+    -> Lors d'un ajout OU lors d'un Update, l'utilisateur peut attribuer une catégorie
+    à un article. Pour commencer, un article peut avoir une seule catégorie, et une 
+    catégorie peut contenir évidemment plusieurs articles. 
+    La catégorie ne doit pas être obligatoire. 
+
+    -> Modification de la view : add_post.php
+        -> Ajout d'un input pour rentrer le nom de la catégorie 
+
+    -> Modification de la méthode add() de la classe admin 
+        -> dans Model/Admin.php et dans Controller/Admin.php
+
+    -> Ajout d'une colonne catégorie dans la base de donnée via PhpMyAdmin 
+        dans la table Posts
+
+    -> Affichage de la catégorie dans les cartes - si il y a une catégorie
+        -> dans View/index.php 
+    
+    -> Affichage de la catégorie dans l'article - si il y a une catégorie
+        -> dans post.php
+    
+    -> Modification du css pour un petit hover violet ( static/css/style.css )
+    
+    -> Ajout d'un bouton 'catégories' dans la topbar ( View/inc/topbar.php)
+
+    -> Creation d'une vue categories.php 
+
+    -> Ajout de function categories() dans Controller/Blog.php, ligne 89
+
+    -> Ajout de function getCategories dans Model/Blog.php , ligne 64
+
+    -> Creation d'une table Categorie via Php My admin 
+
+    -> Conversion de toutes les tables de MyIsam vers InnoDb : pour permettre la création de clé étrangères via le concepteur de phpmyadmin
+    
+    -> PHPMyAdmin : création d'une clé étrangère sur la ligne "idCategorie" de table Posts. ( vers id prim_key de categorie)
+
+    -> creation de getThisCategorie($categorie) dans Model/Admin.php, fonction appelée dans add() ( plus bas dans la page )
+
+    -> mise a jour du controller Controller/Blog.php -> creation fonction 'categories' qui appelle la methode 
+        getCategories() de la class Blog ( dans Model/Blog.php)     oCategories
+
+    -> Pour obtenir les nom de catégories dans la page d'accueil : 
+            -> ajout de getCategories dans le controller, fonction index
+            -> 

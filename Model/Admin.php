@@ -83,6 +83,21 @@ class Admin extends Blog
     return $oStmt->fetch();
   }
 
+  /**
+   * Perso 1 : Ajouter des catégories 
+   * Fonction permettant de retourner toutes les catégories déja présentes 
+   * retourne l'id de la catégorie si elle existe 
+  */
+
+  public function existCategorie($cat){
+    $oStmt = $this->oDb->prepare("SELECT id FROM Categorie WHERE nomCategorie = :categorie");
+    $oStmt->bindParam(':categorie', $cat);
+    $oStmt->execute();
+    $data = $oStmt->fetch();
+    return $data[0];
+  }
+    
+
 
   /* ========== UPDATE ========== */
 
@@ -182,12 +197,66 @@ class Admin extends Blog
     /* ========== INSERT ========== */
 
 
-    public function add(array $aData)
-    {
-      $oStmt = $this->oDb->prepare('INSERT INTO Posts (title, body, createdDate) VALUES(:title, :body, :createdDate)'); // l'erreur était ici !! createdDate et non created_date
+    // public function add(array $aData)
+    // {
+    //   $oStmt = $this->oDb->prepare('INSERT INTO Posts (title, body, createdDate) VALUES(:title, :body, :createdDate)'); // l'erreur était ici !! createdDate et non created_date
+    //   $oStmt->bindValue(':title', $aData['title'], \PDO::PARAM_STR);
+    //   $oStmt->bindValue(':body', $aData['body'], \PDO::PARAM_LOB);
+    //   $oStmt->bindValue(':createdDate', $aData['created_date'], \PDO::PARAM_STR);
+    //   return $oStmt->execute();
+    // }
+
+
+    /**
+     * Perso 1 - A : Ajout de la catégorie, qui est une string 
+     */
+
+    // public function add(array $aData){
+    //   $oStmt = $this->oDb->prepare('INSERT INTO Posts (title, categorie, body, createdDate) VALUES(:title, :categorie, :body, :createdDate)'); 
+    //   $oStmt->bindValue(':title', $aData['title'], \PDO::PARAM_STR);
+    //   // $oStmt->bindValue(':categorie', $aData['categorie'], \PDO::PARAM_STR);
+    //   $oStmt->bindValue(':body', $aData['body'], \PDO::PARAM_LOB);
+    //   $oStmt->bindValue(':createdDate', $aData['created_date'], \PDO::PARAM_STR);
+    //   return $oStmt->execute();
+    // }
+
+    /**
+     * Perso 1 - B : Ajout de la catégorie, qui est une string 
+     *  EDIT : maintenant je ne renseigne plus un champ de categorie dans table Posts
+     *  mais je crée si n'existe pas déja, une ligne dans la table catégorie 
+     */
+
+    public function add(array $aData){
+      $oStmt = $this->oDb->prepare('INSERT INTO Posts (title, idCategorie, body, createdDate) VALUES(:title, :idCategorie, :body, :createdDate)');
+
+      $cat = $aData['categorie'];
+      // si est différent de NULL, idCat est l'id (prim_key) de la categori
+      $idCat = $this->existCategorie($cat);
+      
+      // Si la categorie n'existe pas, je la crée, puis idCat prend la valeur de l'id qui vient d'etre crée
+      if($idCat == NULL ){
+        $this->addCategorie($cat);
+        $idCat = $this->existCategorie($cat);
+        $oStmt->bindValue(':idCategorie', $idCat, \PDO::PARAM_INT);
+      }
+      // sinon j'envoie l'id dans idCategorie de table Post
+      else {
+        $oStmt->bindValue(':idCategorie', $idCat, \PDO::PARAM_INT);
+      }
+      
       $oStmt->bindValue(':title', $aData['title'], \PDO::PARAM_STR);
       $oStmt->bindValue(':body', $aData['body'], \PDO::PARAM_LOB);
       $oStmt->bindValue(':createdDate', $aData['created_date'], \PDO::PARAM_STR);
+      return $oStmt->execute();
+    }
+
+    /**
+     * Création d'une fonction qui ajoute une ligne dans la table 'Categorie', rentrant le nom de la catégorie.
+     * Ok fonctionnnelle, vérifiée
+     */
+    public function addCategorie($categorie){
+      $oStmt = $this->oDb->prepare('INSERT INTO Categorie (nomCategorie) VALUES(:categorie)');
+      $oStmt->bindParam(':categorie', $categorie);
       return $oStmt->execute();
     }
 

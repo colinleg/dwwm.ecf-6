@@ -8,7 +8,7 @@ if (empty($_GET['a'])) {
 
 class Blog
 {
-  const MAX_POSTS = 2;
+  const MAX_POSTS = 5;
 
   protected $oUtil, $oModel;
   private $_iId;
@@ -35,7 +35,8 @@ class Blog
   public function index()
   {
       $this->oUtil->oPosts = $this->oModel->get(0, self::MAX_POSTS);
-
+	  //edité
+	  $this->oUtil->oCats = $this->oModel->getCategories();
       $this->oUtil->getView('index');
   }
 
@@ -55,7 +56,7 @@ class Blog
     }
 
     $this->oUtil->oPost = $this->oModel->getById($this->_iId);
-	  $this->oUtil->oComments = $this->oModel->getComments();
+	$this->oUtil->oComments = $this->oModel->getComments();
 		$getUserId = $this->oModel->getUserId(current($_SESSION));
 
   	if (isset($_POST['submit_comment']))
@@ -73,8 +74,8 @@ class Blog
         }
     }
 
-		$this->oUtil->oUserVotes = $this->oModel->userVotes(current($_SESSION));
-
+	$this->oUtil->oUserVotes = $this->oModel->userVotes(current($_SESSION));
+	$this->oUtil->oCats = $this->oModel->getCategories();
     $this->oUtil->getView('post');
   }
 
@@ -86,6 +87,15 @@ class Blog
     $this->oUtil->getView('chapters');
   }
 
+  	// Perso 1 : Ajout de catégories
+	  public function categories(){
+
+		  $this->oUtil->oCategories = $this->oModel->getCategories();
+		  $this->oUtil->oPosts = $this->oModel->getPostsByIdCat();
+		  $this->oUtil->getView('categories');
+	  }
+
+	  
 
 	// Affiche la page login.php puis suite à l'envoie du formulaire, on vérifie si l'email et le mdp correspondent, puis connecte en tant qu'admin ou user selon le mail.
 	public function login()

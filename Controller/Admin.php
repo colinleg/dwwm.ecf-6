@@ -81,8 +81,14 @@ class Admin extends Blog
             $this->oUtil->getModel('Admin');
             $this->oModel = new \BlogPhp\Model\Admin;
 
-            $aData = array('title' => $_POST['title'], 'body' => $_POST['body'], 'created_date' => date('Y-m-d H:i:s'));
-            $this->oModel->add($aData); // C'est là que ça marche plus 
+            // Perso 1 : Ajout des catégories 
+            if($_POST['categorie'] == ''){
+              $_POST['categorie'] = NULL;
+            }
+            // $aData = array('title' => $_POST['title'], 'body' => $_POST['body'], 'created_date' => date('Y-m-d H:i:s')); 
+            $aData = array('title' => $_POST['title'], 'categorie' => $_POST['categorie'], 'body' => $_POST['body'], 'created_date' => date('Y-m-d H:i:s'));
+
+            $this->oModel->add($aData); 
 
             if (!empty($_FILES['image']['name']))
             {

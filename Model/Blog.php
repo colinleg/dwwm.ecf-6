@@ -14,9 +14,10 @@ class Blog
 
   /* ========== SELECT ========== */
 
-
+  // le nombre d'article qui seront affichés sur la page d'accueil
   public function get($iOffset, $iLimit)
   {
+    //edité
     $oStmt = $this->oDb->prepare('SELECT * FROM Posts ORDER BY createdDate DESC LIMIT :offset, :limit');
     $oStmt->bindParam(':offset', $iOffset, \PDO::PARAM_INT);
     $oStmt->bindParam(':limit', $iLimit, \PDO::PARAM_INT);
@@ -60,6 +61,37 @@ class Blog
     $oStmt = $this->oDb->query('SELECT * FROM Posts ORDER BY createdDate DESC');
     return $oStmt->fetchAll(\PDO::FETCH_OBJ);
   }
+
+  // Perso1 : Ajout de categories 
+
+  
+  public function getCategories(){
+    $oStmt = $this->oDb->query('SELECT * FROM Categorie ORDER BY nomCategorie');
+    return $oStmt->fetchAll(\PDO::FETCH_OBJ);
+  }
+
+  public function getPostsByIdCat(){
+    $oStmt = $this->oDb->query('SELECT * FROM Categorie INNER JOIN Posts ON Categorie.id = Posts.idCategorie ORDER BY idCategorie');
+    return $oStmt->fetchAll(\PDO::FETCH_OBJ);
+  }
+
+  /**
+   * On recupere un tableau d'ids : aIds
+   * on modifie la requete jusqu'à ce qu'elle contiennent toutes les ids à afficher 
+   * on effectue et renvoie la requete qui affichera les posts et nom de catégorie de chaque 
+   * post qui a une catégorie
+   */
+  public function getCatById(array $aIds){
+
+    $req = 'SELECT Posts.idCategorie, Posts.title, Categorie.id, Categorie.nomCategorie FROM Posts INNER JOIN Categorie ON Posts.idCategorie = Categorie.id';
+
+
+    $oStmt = $this->oDb->prepare($req);
+
+    $oStmt->execute();
+    return $oStmt->fetchAll(\PDO::FETCH_OBJ);
+  }
+  // Fin Perso
 
 
   public function isAdmin($sEmail)
